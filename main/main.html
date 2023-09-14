@@ -1,0 +1,91 @@
+<style>
+
+  .box_class
+  {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+
+  }
+  .article_img
+  {
+    background-color: #000;
+    height: 100vh;
+    min-height: 25rem;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+  }
+  .photo_box
+  {
+      background-color: #000;
+      height: 100vh;
+      min-height: 25rem;
+      overflow: hidden;
+      position: relative;
+      width: 100%;
+  }
+  .button_photo
+  {
+      position: absolute;
+      bottom: 35%;
+      left: 4%;
+      width: 12em;
+      font-size: 15px;
+      font-weight: 600;
+      text-transform: uppercase;
+      fill: #ffffff;
+      background-color: var(--red);
+      text-align: center;
+      margin-left: 4em;
+      border-radius: 12px;
+      color: #fff;
+      font-family: Chillax-Semibold,sans-serif;
+      padding: 16px 48px;
+      text-decoration: none;
+  }
+.tilte_photo
+{
+    color: #fff;
+    font-family: Chillax-Medium,sans-serif;
+    font-size: 64px;
+    margin-bottom: 72px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    position: absolute;
+    top: 35%;
+    left: 8%;
+    width: 31%;
+
+}
+  @media (max-width: 1080px) {
+      .tilte_photo{
+          font-size: 48px;
+          width: 10em;
+      }
+      .button_photo
+      {
+          left: 8%;
+          margin-left: 0;
+          bottom: 25%;
+      }
+      .photo_box
+      {
+          height: auto;
+      }
+      .article_img
+      {
+          height: auto;
+      }
+  }
+</style>
+<article class="box_class">
+    <div class="photo_box">
+<img class="article_img" src="../image/main/pepole.jpg" alt="">
+        <label class="tilte_photo">Studenckie koła naukowe </label>
+        <a class="button_photo" href="../search/main.php">Wyszukaj koła</a>
+    </div>
+</article>

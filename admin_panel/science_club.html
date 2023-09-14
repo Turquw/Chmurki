@@ -1,0 +1,472 @@
+<style>
+    .main_info {
+        width: 80%;
+        height: 20%;
+        padding-top: 1em;
+        padding-bottom: 1em;
+    }
+
+    .title_label {
+        color: white;
+        font-size: 1.5rem;
+        border-bottom: none;
+        width: 100%;
+        display: inline-block;
+        margin-bottom: 0.5em;
+        margin-top: 0.5em;
+    }
+
+    .main_info label {
+        color: white;
+        display: inline-block;
+    }
+
+    table {
+        width: 100%;
+        background-color: white;
+        text-align: left;
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
+        margin-bottom: 0.5em;
+    }
+
+    .role_class {
+        width: 10%;
+    }
+
+    .name_class {
+        width: 50%;
+    }
+
+    .last_record {
+        display: flex;
+        gap: 17px;
+    }
+
+    .left_info {
+        float: left;
+        display: flex;
+        width: 40%;
+        flex-direction: column;
+    }
+
+    .left_info label label {
+        width: 35%;
+        min-width: 7em;
+    }
+
+    .left_info label input {
+        width: 52%;
+        float: right;
+        min-width: 9em;
+    }
+
+    .right_info {
+        float: right;
+        display: flex;
+        width: 40%;
+        flex-direction: column;
+
+    }
+
+    .right_info label label {
+        width: 35%;
+        min-width: 7em;
+        margin: auto;
+    }
+
+    .right_info label input {
+        width: 52%;
+        float: right;
+        min-width: 9em;
+
+    }
+
+    .send_button {
+        background-color: white;
+        border-radius: 20px;
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
+        padding: 15px;
+        float: right;
+        cursor: pointer;
+        margin-top: 11px;
+        width: 20%;
+        margin-bottom: 11px;
+    }
+
+    .info_panel label {
+        list-style: none;
+        line-height: 1.5;
+        color: black;
+        text-transform: uppercase;
+        gap: 30px;
+
+    }
+
+    .topic_social {
+        color: #d94d29;
+
+    }
+
+    .description_social {
+        color: grey;
+    }
+
+    .social_media {
+        display: flex;
+        align-content: start;
+        flex-direction: row;
+        justify-content: start;
+        width: 100%;
+        gap: 9%;
+    }
+
+    .link {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-items: start;
+        text-decoration: none;
+        text-align: center;
+    }
+
+    .link input {
+        text-decoration: none;
+        border: none;
+        background-color: transparent;
+        border-bottom: 2px solid white;
+        color: white;
+        margin-left: 9px;
+    }
+
+    .link input:focus-visible {
+        border: none;
+    }
+
+    .description_social {
+        font-size: 0.5rem;
+    }
+
+    .link i {
+        font-size: 30px;
+        color: white;
+        margin-bottom: 10px;
+    }
+
+    .right_info label input[type="checkbox"] {
+        width: unset;
+        min-width: unset;
+        margin: auto;
+        float: initial;
+        margin-left: 9px;
+    }
+
+    .right_info label input[type="hidden"] {
+        display: none;
+    }
+
+    .debug {
+        position: fixed;
+        top: 0;
+        z-index: 200;
+        background-color: white;
+        width: 90%;
+        padding: 8px;
+        color: #af0917;
+        left: 10%;
+
+    }
+
+    .debug i {
+        float: right;
+        padding-right: 1%;
+        color: #b51c29;
+        cursor: pointer;
+    }
+
+
+    .logo img {
+        height: 9vw;
+        aspect-ratio: auto;
+        border: 1px solid #000;
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
+    }
+
+    .bacground_photo {
+        height: 15vh;
+        width: 100%;
+        background-size: cover;
+        float: left;
+        z-index: 200;
+        position: relative;
+    }
+
+    .label_file {
+        width: 100%;
+    }
+
+    input[type="file"] {
+        color: white;
+    }
+
+    .right_logo {
+        width: 70%;
+        float: right;
+        min-width: 21em;
+    }
+
+    .left_logo {
+        width: 30%;
+        float: left;
+    }
+
+    .right_logo label {
+        margin-bottom: 10px;
+    }
+
+</style>
+
+<script>
+    tinymce.init({
+        selector: 'textarea',
+        language_url: '../tinymce/js/tinymce/langs/pl.js',
+        language: 'pl',
+
+
+        plugins: 'ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste  typography inlinecss',
+        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+        tinycomments_mode: 'embedded',
+        tinycomments_author: 'Author name',
+        mergetags_list: [
+            {value: 'First.Name', title: 'First Name'},
+            {value: 'Email', title: 'Email'},
+        ],
+        ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
+    });
+</script>
+<script>
+    let members = [];
+
+    function addMember_base(role, name) {
+        if (name !== "") {
+            members.push({name: name, role: role, editMode: false});
+            updateMemberList();
+
+            saveMembers();
+        }
+    }
+
+    function addMember() {
+        const newMemberNameInput = document.getElementById("newMemberName");
+        const newMemberRoleInput = document.getElementById("newMemberRole");
+        const memberName = newMemberNameInput.value.trim();
+        const memberRole = newMemberRoleInput.value.trim();
+
+        if (memberName !== "") {
+            members.push({name: memberName, role: memberRole, editMode: false});
+            updateMemberList();
+            newMemberNameInput.value = "";
+            newMemberRoleInput.value = "członek";
+            saveMembers();
+        }
+    }
+
+
+    function updateMemberList() {
+        const memberList = document.getElementById("memberList");
+        memberList.innerHTML = "";
+
+        members.forEach((member, index) => {
+            const row = document.createElement("tr");
+
+            const roleCell = document.createElement("td");
+
+            const selectRole = document.createElement("select");
+            const roles = ["członek", "prezes", "sekretarz", "viceprezes"];
+            roles.forEach(role => {
+                const option = document.createElement("option");
+                option.value = role;
+                option.textContent = role;
+                if (role === member.role) {
+                    option.selected = true;
+                }
+                selectRole.appendChild(option);
+            });
+
+            selectRole.addEventListener("change", (event) => {
+                member.role = event.target.value;
+            });
+            roleCell.appendChild(selectRole);
+            row.appendChild(roleCell);
+
+            const nameCell = document.createElement("td");
+
+
+            if (member.editMode) {
+                const nameInput = document.createElement("input");
+                nameInput.type = "text";
+                nameInput.value = member.name;
+                nameInput.addEventListener("change", (event) => {
+                    member.name = event.target.value;
+                });
+                nameCell.appendChild(nameInput);
+            } else {
+                nameCell.textContent = member.name;
+            }
+            row.appendChild(nameCell);
+
+            const optionsCell = document.createElement("td");
+            optionsCell.classList.add("last_record");
+            const deleteIcon = document.createElement("i");
+            deleteIcon.className = "fas fa-trash";
+            deleteIcon.addEventListener("click", () => deleteMember(index));
+            optionsCell.appendChild(deleteIcon);
+
+            const editIcon = document.createElement("i");
+            if (member.editMode) {
+                const exitEditModeIcon = document.createElement("i");
+                exitEditModeIcon.className = "fa-solid fa-check";
+                exitEditModeIcon.addEventListener("click", () => toggleEditMode(index));
+                optionsCell.appendChild(exitEditModeIcon);
+            } else {
+                editIcon.className = "fas fa-user-edit";
+                editIcon.addEventListener("click", () => toggleEditMode(index));
+                optionsCell.appendChild(editIcon);
+            }
+            row.appendChild(optionsCell);
+
+            memberList.appendChild(row);
+        });
+    }
+
+    function deleteMember(index) {
+        members.splice(index, 1);
+        updateMemberList();
+    }
+
+    function toggleEditMode(index) {
+        members[index].editMode = !members[index].editMode;
+        updateMemberList();
+    }
+
+    function saveMembers() {
+        const membersDataInput = document.getElementById("membersData");
+        membersDataInput.value = JSON.stringify(members);
+        console.log("Members data saved:", members);
+
+    }
+
+    function updateBackgroundImage(input) {
+        var backgroundPhoto = document.getElementById('background_photo');
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                backgroundPhoto.style.backgroundImage = 'url(' + e.target.result + ')';
+            };
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            backgroundPhoto.style.backgroundImage = 'none';
+        }
+    }
+</script>
+<div class="main_info">
+    $info
+    <form action="#" enctype="multipart/form-data" method="post">
+        <div class="left_logo">
+            <label class="title_label">Logo</label>
+            <div class="logo"><img id="logo_inp" src=""></div>
+            <label class="label_file"><input accept="image/*" name="logo"
+                                             oninput="document.getElementById('logo_inp').src=window.URL.createObjectURL(this.files[0])"
+                                             type="file"></label>
+        </div>
+        <div class="right_logo">
+            <label class="title_label">Informacje Boczne</label>
+            <div class="left_info">
+                <label><label>Pełna nazwa</label><input name="full_name" required type="text"></label>
+                <label>Skrócona Nazwa<input name="short_name" required type="text"></label>
+                <label>Dziedzina<input name="field" required type="text"></label>
+                <label>Słowa Klucze<input name="key" required type="text"></label>
+
+
+            </div>
+            <div class="right_info">
+                <label>Adres mailowy<input name="email" required type="email"></label>
+                <label><label>Liczba osób</label><input min="1" name="people" required type="number"
+                ></label>
+                <label>Uczelnia<input name="collage" type="text"></label>
+                <label>Rekrutacja poza uczelniana<input name="recruitment" type="checkbox" value="Yes"></label>
+                <label> <input id="membersData" name="membersData" type="hidden"></label>
+            </div>
+        </div>
+        <label class="title_label">Zdjęcie w tle</label>
+
+
+        <div class="bacground_photo" id="background_photo"></div>
+        <label class="label_file"> <input accept="image/*" name="background" onchange="updateBackgroundImage(this)"
+                                          type="file"></label>
+
+
+        <label class="title_label">Zarząd</label>
+        <table>
+            <thead>
+            <tr>
+                <th class="role_class">Rola</th>
+                <th class="name_class">Imię</th>
+                <th class="role_class">Opcje</th>
+            </tr>
+            </thead>
+            <tbody id="memberList">
+
+
+            </tbody>
+        </table>
+
+        <select id="newMemberRole" placeholder="Wybierz rolę członka" required>
+            <option value="członek">Członek</option>
+            <option value="prezes">Prezes</option>
+            <option value="sekretarz">Sekretarz</option>
+            <option value="viceprezes">Viceprezes</option>
+        </select>
+        <input id="newMemberName" placeholder="Wpisz imię członka" type="text">
+
+        <button onclick="addMember()" type="button">Dodaj członka</button>
+        <button onclick="saveMembers()" type="button">Zapisz</button>
+
+        <label class="title_label">Krótka notaka (max 2 linijki)</label>
+        <label for="short_desc"></label><textarea id="short_desc" name="short_desc" ></textarea>
+        <label class="title_label">Informacje Podstawowe</label>
+        <label for="info_basic"></label><textarea id="info_basic" name="info_basic"></textarea>
+        <label class="title_label">Organizowane Projekty</label>
+        <label for="proiect_basic"></label><textarea id="proiect_basic" name="proiect_basic"
+                                                     ></textarea>
+        <label class="title_label">Social Media</label>
+        <div class="social_media">
+
+            <a class="link">
+
+                <label class="topic_social">Link do Fb:<input name="facebook" type="text"></label>
+
+            </a>
+            <a class="link">
+
+                <label class="topic_social">Link do Insta:<input name="instagram" type="text"
+                ></label>
+
+            </a>
+            <a class="link">
+
+                <label class="topic_social">Link do Strony:<input name="web" type="text"></label>
+
+            </a>
+        </div>
+        <button class="send_button" type="submit">Zapisz</button>
+
+    </form>
+</div>
+
+<script>
+    const close_debug = document.getElementById("close_debug");
+    const debug = document.getElementById("debug");
+    close_debug.addEventListener("click", function () {
+        debug.style.display = "none";
+    });
+</script>
